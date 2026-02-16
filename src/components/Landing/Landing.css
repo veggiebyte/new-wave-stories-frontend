@@ -71,10 +71,10 @@
 
 .landing-footer-note {
   font-family: var(--font-body);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 300;
   letter-spacing: 0.08em;
-  color: var(--color-muted);
+  color: var(--color-white);
   margin-top: 1.5rem;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--color-border);

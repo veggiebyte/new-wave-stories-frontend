@@ -1,8 +1,6 @@
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router';
-
+import { useNavigate, Link } from 'react-router-dom';
 import { signUp } from '../../services/authService';
-
 import { UserContext } from '../../contexts/UserContext';
 
 const SignUpForm = () => {
@@ -38,49 +36,83 @@ const SignUpForm = () => {
   };
 
   return (
-    <main>
-      <h1>Sign Up</h1>
-      <p>{message}</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='username'>Username:</label>
-          <input
-            type='text'
-            id='name'
-            value={username}
-            name='username'
-            onChange={handleChange}
-            required
+    <div className="auth-bg">
+      <div className="auth-card">
+
+        <div className="auth-header">
+          <img
+            src="/images/logo_color.png"
+            alt="New Wave Stories"
+            className="auth-logo"
           />
+          <h1 className="auth-title">Sign Up</h1>
+          <div className="divider divider--center" />
         </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
-          <input
-            type='password'
-            id='password'
-            value={password}
-            name='password'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='confirm'>Confirm Password:</label>
-          <input
-            type='password'
-            id='confirm'
-            value={passwordConf}
-            name='passwordConf'
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <button disabled={isFormInvalid()}>Sign Up</button>
-          <button onClick={() => navigate('/')}>Cancel</button>
-        </div>
-      </form>
-    </main>
+
+        {message && <p className="auth-error">{message}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              name="username"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              name="password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="passwordConf">Confirm Password</label>
+            <input
+              type="password"
+              id="passwordConf"
+              value={passwordConf}
+              name="passwordConf"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="auth-actions">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isFormInvalid()}
+            >
+              Sign Up
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={() => navigate('/')}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+
+        <p className="auth-switch">
+          Already have an account?{' '}
+          <Link to="/sign-in">Sign in here.</Link>
+        </p>
+
+      </div>
+    </div>
   );
 };
 

@@ -1,9 +1,14 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
+import './NavBar.css';
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
+  const location = useLocation();
+
+  // Hide navbar entirely on landing page when logged out
+  if (!user && location.pathname === '/') return null;
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
@@ -12,45 +17,48 @@ const NavBar = () => {
 
   return (
     <header className="navbar">
-      <nav className="navbar__inner" aria-label="Primary navigation">
-        <div className="navbar__left">
-          <NavLink to="/" className="navbar__brand">
-            New Wave Stories
+      <nav className="navbar-inner" aria-label="Primary navigation">
+
+        <div className="navbar-brand">
+          <NavLink to="/">
+            <img
+              src="/images/logo_color.png"
+              alt="New Wave Stories"
+              className="navbar-logo"
+            />
           </NavLink>
-          {user && <span className="navbar__welcome">Welcome, {user.username}</span>}
         </div>
 
-        <div className="navbar__right">
-          <NavLink to="/" className="navbar__item">
-            Home
-          </NavLink>
-
+        <div className="navbar-links">
           {user ? (
             <>
-              <NavLink to="/boards" className="navbar__item">
+              <NavLink to="/boards" className="navbar-item">
                 My Boards
               </NavLink>
-
-              <NavLink to="/boards/new" className="navbar__item">
+              <NavLink to="/boards/new" className="navbar-item">
                 Create a Board
               </NavLink>
-
-              <button className="navbar__item" type="button" onClick={handleSignOut}>
+              <span className="navbar-welcome">Hi, {user.username}</span>
+              <button
+                className="navbar-item navbar-signout"
+                type="button"
+                onClick={handleSignOut}
+              >
                 Sign Out
               </button>
             </>
           ) : (
             <>
-              <NavLink to="/sign-in" className="navbar__item">
+              <NavLink to="/sign-in" className="navbar-item">
                 Sign In
               </NavLink>
-
-              <NavLink to="/sign-up" className="navbar__item">
+              <NavLink to="/sign-up" className="navbar-item">
                 Sign Up
               </NavLink>
             </>
           )}
         </div>
+
       </nav>
     </header>
   );
