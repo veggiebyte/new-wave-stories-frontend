@@ -21,19 +21,22 @@ const App = () => {
   return (
     <>
       <NavBar />
-      <Routes>
-        <Route path='/' element={user ? <BoardsIndex /> : <Landing />} />
-        <Route path='/sign-up' element={<SignUpForm />} />
-        <Route path='/sign-in' element={<SignInForm />} />
-        <Route path='/boards' element={user ? <BoardsIndex /> : <Landing />} />
-        <Route path='/boards/new' element={user ? <BoardNew /> : <Landing />} />
-        <Route path='/boards/:boardId' element={user ? <BoardShow /> : <Landing />} />
-        <Route path='/boards/:boardId/edit' element={user ? <BoardEdit /> : <Landing />} />
+      <main className="container">
+
+        <Routes>
+          <Route path='/' element={user ? <BoardsIndex /> : <Landing />} />
+          <Route path='/sign-up' element={<SignUpForm />} />
+          <Route path='/sign-in' element={<SignInForm />} />
+          <Route path='/boards' element={user ? <BoardsIndex /> : <Landing />} />
+          <Route path='/boards/new' element={user ? <BoardNew /> : <Landing />} />
+          <Route path='/boards/:boardId' element={user ? <BoardShow /> : <Landing />} />
+          <Route path='/boards/:boardId/edit' element={user ? <BoardEdit /> : <Landing />} />
 
 
-      </Routes>
-    </>
-  );
+        </Routes>
+        </main>
+      </>
+      );
 };
 
-export default App;
+      export default App;

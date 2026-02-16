@@ -1,0 +1,95 @@
+/* ============================================================
+   Landing Page Styles
+   Landing.css
+   ============================================================ */
+
+.landing-bg {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.012) 3px,
+      rgba(255, 255, 255, 0.012) 4px
+    );
+}
+
+.landing-hero {
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.landing-logo-wrap {
+  margin-bottom: 0.5rem;
+}
+
+.landing-logo {
+  width: clamp(180px, 40vw, 300px);
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 18px rgba(238, 71, 153, 0.35));
+}
+
+.landing-tagline {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  line-height: 1.5;
+  max-width: 560px;
+}
+
+.landing-body {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-white);
+  line-height: 1.8;
+  max-width: 580px;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.landing-footer-note {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-top: 1.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .landing-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .landing-actions .btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}

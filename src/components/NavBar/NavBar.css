@@ -1,0 +1,113 @@
+/* ============================================================
+   NavBar Styles
+   NavBar.css
+   ============================================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background-color: rgba(10, 10, 10, 0.92);
+    /* Thin pink line at the very bottom of the nav */
+    border-bottom: 1px solid var(--color-border);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+}
+
+.navbar-inner {
+    max-width: var(--max-width);
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- Logo in nav --- */
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 36px;
+    width: auto;
+}
+
+/* --- Nav links --- */
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.navbar-links a,
+.navbar-links button {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-sm);
+    transition: color 0.2s ease, background-color 0.2s ease;
+    text-decoration: none;
+}
+
+.navbar-links a:hover,
+.navbar-links button:hover {
+    color: var(--color-white);
+    background-color: var(--color-surface-2);
+}
+
+/* Active link — glows pink */
+.navbar-links a.active {
+    color: var(--color-pink);
+}
+
+/* Sign out gets a subtle outline */
+.navbar-links .navbar-signout {
+    color: var(--color-dim);
+    border: 1px solid var(--color-border);
+    margin-left: 0.5rem;
+}
+
+.navbar-links .navbar-signout:hover {
+    color: var(--color-pink);
+    border-color: var(--color-pink);
+    background-color: transparent;
+}
+
+/* Separator between nav groups */
+.navbar-sep {
+    width: 1px;
+    height: 16px;
+    background-color: var(--color-border);
+    margin: 0 0.5rem;
+}
+
+/* --- Responsive: mobile --- */
+@media (max-width: 600px) {
+    .navbar-links {
+        gap: 0;
+    }
+
+    .navbar-links a,
+    .navbar-links button {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.55rem;
+        letter-spacing: 0.08em;
+    }
+
+    .navbar-sep {
+        display: none;
+    }
+}

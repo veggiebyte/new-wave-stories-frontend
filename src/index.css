@@ -1,68 +1,247 @@
+/* ============================================================
+   NEW WAVE STORIES — Global Styles
+   index.css
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* --- CSS Variables --- */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --color-bg:         #0a0a0a;
+  --color-surface:    #111111;
+  --color-surface-2:  #1a1a1a;
+  --color-border:     #2a2a2a;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --color-pink:       #ee4799;
+  --color-green:      #65ff29;
+  --color-white:      #f0f0f0;
+  --color-muted:      #888888;
+  --color-dim:        #555555;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-display:     'Antonio', sans-serif;
+  --font-body:        'DM Sans', sans-serif;
+
+  --glow-pink:        0 0 12px rgba(238, 71, 153, 0.55);
+  --glow-green:       0 0 12px rgba(101, 255, 41, 0.45);
+
+  --radius-sm:        4px;
+  --radius-md:        8px;
+
+  --max-width:        1100px;
+  --nav-height:       64px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-a:hover {
-  color: #535bf2;
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
   min-height: 100vh;
+  /* Subtle grain texture via SVG data URI */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-h1 {
-  font-size: 3.2em;
+/* --- Typography --- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
   line-height: 1.1;
+  text-transform: uppercase;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
+
+p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+a {
+  color: var(--color-pink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-white);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- Layout Utilities --- */
+.page-bg {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.85rem 2.25rem;
+  border-radius: var(--radius-sm);
+  border: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.2s ease;
+  text-decoration: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn-primary {
+  background-color: var(--color-pink);
+  color: #0a0a0a;
+  box-shadow: var(--glow-pink);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-white);
+  color: #0a0a0a;
+  box-shadow: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-pink);
+  color: var(--color-pink);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-muted);
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
+.btn-ghost:hover {
+  color: var(--color-white);
+}
+
+.btn-green {
+  background-color: var(--color-green);
+  color: #0a0a0a;
+  box-shadow: var(--glow-green);
+}
+
+.btn-green:hover {
+  background-color: var(--color-white);
+  color: #0a0a0a;
+  box-shadow: none;
+}
+
+/* --- Form Elements --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-pink);
+}
+
+.form-group select option {
+  background-color: var(--color-surface-2);
+}
+
+/* --- Divider --- */
+.divider {
+  width: 48px;
+  height: 2px;
+  background-color: var(--color-pink);
+  margin: 1rem 0;
+}
+
+.divider--center {
+  margin: 1rem auto;
+}
+
+/* --- Accent text --- */
+.text-pink  { color: var(--color-pink); }
+.text-green { color: var(--color-green); }
+.text-muted { color: var(--color-muted); }
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pink);
 }

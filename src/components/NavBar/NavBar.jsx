@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
 
 const NavBar = () => {
@@ -12,27 +11,48 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
-      {user ? (
-        <ul>
-          <li>Welcome, {user.username}</li>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/boards">My Boards</Link></li>
-          <li><Link to="/boards/new">Create a Board</Link></li>
-          <li>
-            <Link to="/" onClick={handleSignOut}>
-              Sign Out
-            </Link>
-          </li>
-        </ul>
-      ) : (
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/sign-in">Sign In</Link></li>
-          <li><Link to="/sign-up">Sign Up</Link></li>
-        </ul>
-      )}
-    </nav>
+    <header className="navbar">
+      <nav className="navbar__inner" aria-label="Primary navigation">
+        <div className="navbar__left">
+          <NavLink to="/" className="navbar__brand">
+            New Wave Stories
+          </NavLink>
+          {user && <span className="navbar__welcome">Welcome, {user.username}</span>}
+        </div>
+
+        <div className="navbar__right">
+          <NavLink to="/" className="navbar__item">
+            Home
+          </NavLink>
+
+          {user ? (
+            <>
+              <NavLink to="/boards" className="navbar__item">
+                My Boards
+              </NavLink>
+
+              <NavLink to="/boards/new" className="navbar__item">
+                Create a Board
+              </NavLink>
+
+              <button className="navbar__item" type="button" onClick={handleSignOut}>
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/sign-in" className="navbar__item">
+                Sign In
+              </NavLink>
+
+              <NavLink to="/sign-up" className="navbar__item">
+                Sign Up
+              </NavLink>
+            </>
+          )}
+        </div>
+      </nav>
+    </header>
   );
 };
 
