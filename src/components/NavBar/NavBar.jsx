@@ -1,66 +1,69 @@
 import { useContext } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
-import './NavBar.css';
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
   const location = useLocation();
 
-  // Hide navbar entirely on landing page when logged out
   if (!user && location.pathname === '/') return null;
 
-  const handleSignOut = () => {
+  const handleSignOut = (e) => {
+    e.preventDefault();
     localStorage.removeItem('token');
     setUser(null);
+    navigate('/');
   };
 
   return (
-    <header className="navbar">
-      <nav className="navbar-inner" aria-label="Primary navigation">
+    <>
+      <img
+        src="/images/logo_color.png"
+        alt="New Wave Stories"
+        className="auth-logo"
+      />
 
-        <div className="navbar-brand">
-          <NavLink to="/">
-            <img
-              src="/images/logo_color.png"
-              alt="New Wave Stories"
-              className="navbar-logo"
-            />
-          </NavLink>
-        </div>
+      <p className="auth-tagline">
+        Create 1980s-inspired fashion collages
+      </p>
 
-        <div className="navbar-links">
-          {user ? (
-            <>
-              <NavLink to="/boards" className="navbar-item">
-                My Boards
-              </NavLink>
-              <NavLink to="/boards/new" className="navbar-item">
-                Create a Board
-              </NavLink>
-              <span className="navbar-welcome">Hi, {user.username}</span>
-              <button
-                className="navbar-item navbar-signout"
-                type="button"
-                onClick={handleSignOut}
-              >
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <NavLink to="/sign-in" className="navbar-item">
-                Sign In
-              </NavLink>
-              <NavLink to="/sign-up" className="navbar-item">
-                Sign Up
-              </NavLink>
-            </>
-          )}
-        </div>
-
+      <nav className="auth-nav">
+        {user ? (
+          <>
+            <NavLink to="/boards" className="btn btn-green">
+              <span className="auth-nav-arrow">▶</span>
+              My Boards
+            </NavLink>
+            <NavLink to="/boards/new" className="btn btn-green">
+              <span className="auth-nav-arrow">▶</span>
+              Create a Board
+            </NavLink>
+            <NavLink to="/" className="btn btn-green" onClick={handleSignOut}>
+              <span className="auth-nav-arrow">▶</span>
+              Sign Out
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/" className="btn btn-green">
+              <span className="auth-nav-arrow">▶</span>
+              Home
+            </NavLink>
+            <NavLink to="/sign-in" className="btn btn-green">
+              <span className="auth-nav-arrow">▶</span>
+              Sign In
+            </NavLink>
+            <NavLink to="/sign-up" className="btn btn-green">
+              <span className="auth-nav-arrow">▶</span>
+              Sign Up
+            </NavLink>
+          </>
+        )}
       </nav>
-    </header>
+
+      {user && <p className="auth-user-greeting">Hi, {user.username}</p>}
+    </>
   );
 };
 

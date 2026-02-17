@@ -17,13 +17,42 @@ const App = () => {
 
   return (
     <>
-      <NavBar />
       <Routes>
-        <Route path='/' element={user ? <BoardsIndex /> : <Landing />} />
-        <Route path='/sign-up' element={<SignUpForm />} />
-        <Route path='/sign-in' element={<SignInForm />} />
-        <Route path='/boards' element={user ? <BoardsIndex /> : <Landing />} />
-        <Route path='/boards/new' element={user ? <BoardNew /> : <Landing />} />
+        <Route path='/' element={
+          user ? (
+            <div className="auth-page">
+              <div className="auth-container">
+                <NavBar />
+                <BoardsIndex />
+              </div>
+            </div>
+          ) : <Landing />
+        } />        <Route path='/sign-up' element={
+          <div className="auth-page">
+            <div className="auth-container">
+              <NavBar />
+              <SignUpForm />
+            </div>
+          </div>
+        } />
+        <Route path='/sign-in' element={
+          <div className="auth-page">
+            <div className="auth-container">
+              <NavBar />
+              <SignInForm />
+            </div>
+          </div>
+        } />
+        <Route path='/boards' element={
+          user ? (
+            <div className="auth-page">
+              <div className="auth-container">
+                <NavBar />
+                <BoardsIndex />
+              </div>
+            </div>
+          ) : <Landing />
+        } />        <Route path='/boards/new' element={user ? <BoardNew /> : <Landing />} />
         <Route path='/boards/:boardId' element={user ? <BoardShow /> : <Landing />} />
         <Route path='/boards/:boardId/edit' element={user ? <BoardEdit /> : <Landing />} />
       </Routes>

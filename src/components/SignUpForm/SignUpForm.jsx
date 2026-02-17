@@ -36,82 +36,71 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="auth-bg">
-      <div className="auth-card">
+    <div className="auth-form-card">
+      <h1 className="auth-form-title">Sign Up</h1>
+      <div className="divider divider--center" />
 
-        <div className="auth-header">
-          <img
-            src="/images/logo_color.png"
-            alt="New Wave Stories"
-            className="auth-logo"
+      {message && <p className="auth-error">{message}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            name="username"
+            onChange={handleChange}
+            required
           />
-          <h1 className="auth-title">Sign Up</h1>
-          <div className="divider divider--center" />
         </div>
 
-        {message && <p className="auth-error">{message}</p>}
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            name="password"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              name="username"
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="passwordConf">Confirm Password</label>
+          <input
+            type="password"
+            id="passwordConf"
+            value={passwordConf}
+            name="passwordConf"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              name="password"
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="auth-form-actions">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={isFormInvalid()}
+          >
+            Sign Up
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={() => navigate('/')}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
 
-          <div className="form-group">
-            <label htmlFor="passwordConf">Confirm Password</label>
-            <input
-              type="password"
-              id="passwordConf"
-              value={passwordConf}
-              name="passwordConf"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="auth-actions">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={isFormInvalid()}
-            >
-              Sign Up
-            </button>
-            <button
-              type="button"
-              className="btn btn-outline"
-              onClick={() => navigate('/')}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-
-        <p className="auth-switch">
-          Already have an account?{' '}
-          <Link to="/sign-in">Sign in here.</Link>
-        </p>
-
-      </div>
+      <p className="auth-switch">
+        Already have an account?{' '}
+        <Link to="/sign-in">Sign in here.</Link>
+      </p>
     </div>
   );
 };

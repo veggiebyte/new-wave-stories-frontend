@@ -29,66 +29,55 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="auth-bg">
-      <div className="auth-card">
+    <div className="auth-form-card">
+      <h1 className="auth-form-title">Sign In</h1>
+      <div className="divider divider--center" />
 
-        <div className="auth-header">
-          <img
-            src="/images/logo_color.png"
-            alt="New Wave Stories"
-            className="auth-logo"
+      {message && <p className="auth-error">{message}</p>}
+
+      <form autoComplete="off" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            autoComplete="off"
+            id="username"
+            value={formData.username}
+            name="username"
+            onChange={handleChange}
+            required
           />
-          <h1 className="auth-title">Sign In</h1>
-          <div className="divider divider--center" />
         </div>
 
-        {message && <p className="auth-error">{message}</p>}
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            autoComplete="off"
+            id="password"
+            value={formData.password}
+            name="password"
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              autoComplete="off"
-              id="username"
-              value={formData.username}
-              name="username"
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <div className="auth-form-actions">
+          <button type="submit" className="btn btn-primary">Sign In</button>
+          <button
+            type="button"
+            className="btn btn-outline"
+            onClick={() => navigate('/')}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              autoComplete="off"
-              id="password"
-              value={formData.password}
-              name="password"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="auth-actions">
-            <button type="submit" className="btn btn-primary">Sign In</button>
-            <button
-              type="button"
-              className="btn btn-outline"
-              onClick={() => navigate('/')}
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-
-        <p className="auth-switch">
-          Don't have an account?{' '}
-          <Link to="/sign-up">Sign up here.</Link>
-        </p>
-
-      </div>
+      <p className="auth-switch">
+        Don't have an account?{' '}
+        <Link to="/sign-up">Sign up here.</Link>
+      </p>
     </div>
   );
 };
