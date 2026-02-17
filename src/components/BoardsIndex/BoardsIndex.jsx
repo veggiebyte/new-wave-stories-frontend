@@ -31,7 +31,7 @@ const BoardsIndex = () => {
   return (
     <div className="boards-container">
       <h1 className="auth-form-title">Your Boards</h1>
-<div className="divider divider--center divider--wide" />
+      <div className="divider divider--center divider--wide" />
 
       {error && <p className="auth-error">{error}</p>}
 
@@ -48,13 +48,13 @@ const BoardsIndex = () => {
             <h3 className="board-title">{board.title}</h3>
             <p className="board-detail">City: {board.city}</p>
             <p className="board-detail">Vibe: {board.vibe}</p>
-            <p className="board-detail">Created: {new Date(board.createdAt).toLocaleDateString()}</p>
-            
+            <p className="board-detail">Created: {new Date(board.created_at).toLocaleDateString()}</p>
+
             <div className="board-actions">
               <Link to={`/boards/${board.id}`} className="btn btn-green">View</Link>
               <Link to={`/boards/${board.id}/edit`} className="btn btn-outline">Edit</Link>
-              <button 
-                onClick={() => handleDelete(board.id)} 
+              <button
+                onClick={() => handleDelete(board.id)}
                 className="btn btn-outline"
               >
                 Delete

@@ -27,7 +27,9 @@ const App = () => {
               </div>
             </div>
           ) : <Landing />
-        } />        <Route path='/sign-up' element={
+        } />
+        
+        <Route path='/sign-up' element={
           <div className="auth-page">
             <div className="auth-container">
               <NavBar />
@@ -35,6 +37,7 @@ const App = () => {
             </div>
           </div>
         } />
+        
         <Route path='/sign-in' element={
           <div className="auth-page">
             <div className="auth-container">
@@ -43,6 +46,7 @@ const App = () => {
             </div>
           </div>
         } />
+        
         <Route path='/boards' element={
           user ? (
             <div className="auth-page">
@@ -52,9 +56,40 @@ const App = () => {
               </div>
             </div>
           ) : <Landing />
-        } />        <Route path='/boards/new' element={user ? <BoardNew /> : <Landing />} />
-        <Route path='/boards/:boardId' element={user ? <BoardShow /> : <Landing />} />
-        <Route path='/boards/:boardId/edit' element={user ? <BoardEdit /> : <Landing />} />
+        } />
+        
+        <Route path='/boards/new' element={
+          user ? (
+            <div className="auth-page">
+              <div className="auth-container">
+                <NavBar />
+                <BoardNew />
+              </div>
+            </div>
+          ) : <Landing />
+        } />
+        
+        <Route path='/boards/:boardId' element={
+          user ? (
+            <div className="auth-page">
+              <div className="auth-container">
+                <NavBar />
+                <BoardShow />
+              </div>
+            </div>
+          ) : <Landing />
+        } />
+        
+        <Route path='/boards/:boardId/edit' element={
+          user ? (
+            <div className="auth-page">
+              <div className="auth-container">
+                <NavBar />
+                <BoardEdit />
+              </div>
+            </div>
+          ) : <Landing />
+        } />
       </Routes>
     </>
   );
