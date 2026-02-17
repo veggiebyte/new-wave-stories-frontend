@@ -5,62 +5,79 @@ import * as boardsService from '../../services/boardsService';
 import * as boardItemsService from '../../services/boardItemsService';
 import * as catalogService from '../../services/catalogService';
 
+const CATEGORIES = ['accessories', 'dresses', 'jackets', 'pants', 'shirts', 'shoes', 'skirts'];
+
+const SONG_INSPO_IMAGES = {
+  'Love Will Tear Us Apart - Joy Division': '/images/bands/joy_division.jpg',
+  'Say Hello Wave Goodbye - Soft Cell': '/images/bands/soft_cell.jpg',
+  'Fade to Grey - Visage': '/images/bands/visage.jpg',
+  'Enola Gay - OMD': '/images/bands/omd.jpg',
+  'Soap Commercial - Psychedelic Furs': '/images/bands/psych_furs.jpg',
+  'I Ran - Flock of Seagulls': '/images/bands/flock.jpg',
+  'The Metro - Berlin': '/images/bands/berlin.jpg',
+  "Don't You Want Me - The Human League": '/images/bands/human_league.jpg',
+  'Vienna - Ultravox': '/images/bands/ultravox.jpg',
+  "Bela Lugosi's Dead - Bauhaus": '/images/bands/bauhaus.jpg',
+  'A Forest - The Cure': '/images/bands/cure.jpg',
+  'Cities In Dust - Siouxsie And The Banshees': '/images/bands/siouxsie.jpg',
+  'Love Missile F1-11 - Sigue Sigue Sputnik': '/images/bands/sigue.jpg',
+  'Ants Invasion - Adam & the Ants': '/images/bands/adam_ant.jpg',
+  'Time - Culture Club': '/images/bands/culture_club.jpg',
+  'Lies - The Thompson Twins': '/images/bands/thompson_twins.jpg',
+  'Rise - Public Image Ltd': '/images/bands/pil.jpg',
+  "Rock Lobster - The B-52's": '/images/bands/B52s.jpg',
+  'This Charming Man - The Smiths': '/images/bands/smiths.jpg',
+  'Blue Monday - New Order': '/images/bands/new_order.jpg',
+};
+
 const BoardShow = () => {
   const { boardId } = useParams();
   const navigate = useNavigate();
 
   const [board, setBoard] = useState(null);
+  const [items, setItems] = useState([]);
+  const [catalog, setCatalog] = useState([]);
+  const [activeCategory, setActiveCategory] = useState('accessories');
   const [error, setError] = useState('');
 
-  const [items, setItems] = useState([]);
-  const [itemsError, setItemsError] = useState('');
-
-  const [catalog, setCatalog] = useState([]);
-  const [catalogError, setCatalogError] = useState('');
-
-  const refreshItems = async () => {
-    try {
-      const data = await boardItemsService.index(boardId);
-      setItems(data);
-      setItemsError('');
-    } catch (err) {
-      setItemsError(err.message || 'Failed to load board items');
-    }
-  };
-
   useEffect(() => {
-    const fetchBoard = async () => {
+    const fetchAll = async () => {
       try {
-        const data = await boardsService.show(boardId);
-        setBoard(data);
+        const boardData = await boardsService.show(boardId);
+        setBoard(boardData);
+        const itemsData = await boardItemsService.index(boardId);
+        setItems(itemsData);
+        const catalogData = await catalogService.index();
+        setCatalog(catalogData);
       } catch (err) {
         setError(err.message || 'Failed to load board');
       }
     };
-    fetchBoard();
+    fetchAll();
   }, [boardId]);
 
-  useEffect(() => {
-    refreshItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boardId]);
+  const handleAddToBoard = async (catalogItemId) => {
+    try {
+      await boardItemsService.create(boardId, catalogItemId);
+      const updated = await boardItemsService.index(boardId);
+      setItems(updated);
+    } catch (err) {
+      setError(err.message || 'Failed to add item');
+    }
+  };
 
-  useEffect(() => {
-    const fetchCatalog = async () => {
-      try {
-        const data = await catalogService.index();
-        setCatalog(data);
-      } catch (err) {
-        setCatalogError(err.message || 'Failed to load catalog');
-      }
-    };
-    fetchCatalog();
-  }, []);
+  const handleRemoveFromBoard = async (boardItemId) => {
+    try {
+      await boardItemsService.remove(boardId, boardItemId);
+      const updated = await boardItemsService.index(boardId);
+      setItems(updated);
+    } catch (err) {
+      setError(err.message || 'Failed to remove item');
+    }
+  };
 
   const handleDeleteBoard = async () => {
-    const ok = confirm('Delete this board? This cannot be undone.');
-    if (!ok) return;
-
+    if (!window.confirm('Delete this board? This cannot be undone.')) return;
     try {
       await boardsService.remove(boardId);
       navigate('/boards');
@@ -69,211 +86,161 @@ const BoardShow = () => {
     }
   };
 
-  const handleAddToBoard = async (catalogItemId) => {
-    try {
-      await boardItemsService.create(boardId, catalogItemId);
-      await refreshItems();
-    } catch (err) {
-      setItemsError(err.message || 'Failed to add item');
-    }
+  const moveItem = (boardItemId, direction) => {
+    const idx = items.findIndex(i => i.board_item_id === boardItemId);
+    if (idx === -1) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= items.length) return;
+    const next = [...items];
+    [next[idx], next[swapIdx]] = [next[swapIdx], next[idx]];
+    setItems(next);
   };
 
-  const handleRemoveFromBoard = async (boardItemId) => {
-    try {
-      await boardItemsService.remove(boardId, boardItemId);
-      await refreshItems();
-    } catch (err) {
-      setItemsError(err.message || 'Failed to remove item');
-      alert(err.message || 'Failed to remove item');
-    }
-  };
+  const filteredCatalog = catalog.filter(item => item.category === activeCategory);
 
-  if (error) {
-    return (
-      <main>
-        <p>{error}</p>
-        <Link to="/boards">Back to Boards</Link>
-      </main>
-    );
-  }
-
-  if (!board) {
-    return (
-      <main>
-        <p>Loading...</p>
-      </main>
-    );
-  }
-
-  const normalizeOrder = (list) => {
-    const sorted = [...list].sort((a, b) => {
-      const ai = a.sort_index ?? 0;
-      const bi = b.sort_index ?? 0;
-      if (ai !== bi) return ai - bi;
-
-      const aid = a.board_item_id ?? a.id ?? 0;
-      const bid = b.board_item_id ?? b.id ?? 0;
-      return aid - bid;
-    });
-
-    return sorted.map((it, idx) => ({ ...it, sort_index: idx }));
-  };
-
-  const persistTwo = async (a, b) => {
-    await Promise.all([
-      boardItemsService.update(boardId, a.board_item_id, { sort_index: a.sort_index }),
-      boardItemsService.update(boardId, b.board_item_id, { sort_index: b.sort_index }),
-    ]);
-  };
-
-  const moveItem = async (boardItemId, direction) => {
-    try {
-      setItemsError('');
-
-      const normalized = normalizeOrder(items);
-      const idx = normalized.findIndex((x) => x.board_item_id === boardItemId);
-      if (idx === -1) return;
-
-      const swapWith = direction === 'up' ? idx - 1 : idx + 1;
-      if (swapWith < 0 || swapWith >= normalized.length) return;
-
-      const next = [...normalized];
-      const a = { ...next[idx] };
-      const b = { ...next[swapWith] };
-
-      // swap sort_index
-      const temp = a.sort_index;
-      a.sort_index = b.sort_index;
-      b.sort_index = temp;
-
-      next[idx] = a;
-      next[swapWith] = b;
-
-      // optimistic UI
-      setItems(next);
-
-      // persist to backend
-      await persistTwo(a, b);
-
-      // re-fetch for safety
-      await refreshItems();
-    } catch (err) {
-      setItemsError(err.message || 'Failed to reorder items');
-      await refreshItems();
-    }
-  };
-
-
-
+  if (!board) return <p className="auth-error">Loading...</p>;
 
   return (
-    <main>
-      <h1>{board.title}</h1>
+    <div className="auth-form-card">
 
-      <p>
-        <Link to={`/boards/${boardId}/edit`}>Edit Board</Link>
-      </p>
+      <h1 className="auth-form-title">{board.title}</h1>
+      <div className="divider divider--center divider--wide" />
 
-      <button onClick={handleDeleteBoard}>Delete Board</button>
+      <div className="board-top">
 
-      <p>
-        <Link to="/boards">← Back to Boards</Link>
-      </p>
+        <div className="board-top-info">
+          <p className="board-detail">City: {board.city}</p>
+          <p className="board-detail">Vibe: {board.vibe}</p>
+          <p className="board-detail">Song: {board.song}</p>
+          <Link to={`/boards/${boardId}/edit`} className="btn-sm btn-green-sm">
+            Edit Info
+          </Link>
+        </div>
 
-      <section>
-        <h2>Catalog</h2>
+        {board.song && SONG_INSPO_IMAGES[board.song] && (
+          <div className="board-top-inspo">
+            <div className="board-inspo-starburst">
+              <span>INSPO</span>
+            </div>
+            <img
+              src={SONG_INSPO_IMAGES[board.song]}
+              alt={board.song}
+              className="board-inspo-img"
+            />
+            <p className="song-inspo-label">{board.song}</p>
+          </div>
+        )}
 
-        {catalogError && <p>{catalogError}</p>}
+      </div>
 
-        {!catalogError && catalog.length === 0 && <p>No catalog items yet.</p>}
+      <div className="board-divider" />
 
-        <ul>
-          {catalog.map((catItem) => (
-            <li key={catItem.id}>
-              {catItem.name || catItem.title}
-              <button onClick={() => handleAddToBoard(catItem.id)}>
-                Add to Board
+      {error && <p className="auth-error">{error}</p>}
+
+      <div className="board-show-layout">
+
+        <div className="board-catalog-section">
+          <h2 className="board-section-title">Catalog</h2>
+          <p className="board-instructions">
+            Click an item to add it to your fashion board.
+            Hover over items on your board to move or remove them.
+          </p>
+          <div className="board-category-tabs">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                className={`board-category-tab${activeCategory === cat ? ' active' : ''}`}
+                onClick={() => setActiveCategory(cat)}
+                type="button"
+              >
+                {cat}
               </button>
-            </li>
-          ))}
-        </ul>
-      </section>
+            ))}
+          </div>
+          <div className="board-catalog-grid">
+            {filteredCatalog.map((catItem) => (
+              <div
+                key={catItem.id}
+                className="board-catalog-item"
+                onClick={() => handleAddToBoard(catItem.id)}
+              >
+                <img
+                  src={catItem.image_url}
+                  alt={catItem.name}
+                  className="board-catalog-img"
+                />
+                <p className="board-catalog-name">{catItem.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      <section>
-        <h2>Board Items</h2>
-
-        {itemsError && <p>{itemsError}</p>}
-
-        {!itemsError && items.length === 0 && <p>No items on this board yet.</p>}
-
-        <ul>
-          {items.map((item) => {
-            // Try hard to find the board_item id (the one your DELETE route needs)
-            const boardItemId =
-              item.board_item_id ??
-              item.boardItemId ??
-              item.board_item?.id ??
-              item.boardItem?.id ??
-              item.board_item?.board_item_id ??
-              item.id; // LAST resort
-
-            const label = item.name || item.title || item.catalog_name || 'Item';
-
-            return (
-              <li key={boardItemId}>
-                <div>{label}</div>
-
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <button
-                    onClick={() => {
-                      if (!boardItemId) {
-                        setItemsError('Missing board item id. Check API response shape.');
-                        return;
-                      }
-                      moveItem(boardItemId, 'up');
-                    }}
-                    aria-label="Move item up"
-                    type="button"
-                  >
-                    ↑
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      if (!boardItemId) {
-                        setItemsError('Missing board item id. Check API response shape.');
-                        return;
-                      }
-                      moveItem(boardItemId, 'down');
-                    }}
-                    aria-label="Move item down"
-                    type="button"
-                  >
-                    ↓
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      if (!boardItemId) {
-                        setItemsError('Missing board item id. Check API response shape.');
-                        return;
-                      }
-                      handleRemoveFromBoard(boardItemId);
-                    }}
-                    type="button"
-                  >
-                    Remove
-                  </button>
+        <div className="board-canvas-section">
+          <h2 className="board-section-title">Your Fashion Board</h2>
+          <div className="board-canvas">
+            {items.length === 0 && (
+              <p className="board-canvas-empty">
+                Your board is empty — click items from the catalog to build your look
+              </p>
+            )}
+            <div className="board-canvas-grid">
+              {items.map((item) => (
+                <div key={item.board_item_id} className="board-canvas-item">
+                  <img
+                    src={item.image_url}
+                    alt={item.name}
+                    className="board-canvas-img"
+                  />
+                  <div className="board-canvas-controls">
+                    <button
+                      className="board-canvas-btn"
+                      onClick={() => moveItem(item.board_item_id, 'up')}
+                      type="button"
+                      aria-label="Move up"
+                    >↑</button>
+                    <button
+                      className="board-canvas-btn board-canvas-remove"
+                      onClick={() => handleRemoveFromBoard(item.board_item_id)}
+                      type="button"
+                      aria-label="Remove item"
+                    >✕</button>
+                    <button
+                      className="board-canvas-btn"
+                      onClick={() => moveItem(item.board_item_id, 'down')}
+                      type="button"
+                      aria-label="Move down"
+                    >↓</button>
+                  </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
+      </div>
 
-              </li>
-            );
-          })}
-        </ul>
+      <div className="board-story-section">
+        <h2 className="board-section-title">Scene Story</h2>
+        {board.story ? (
+          <p className="board-story-text">{board.story}</p>
+        ) : (
+          <p className="board-canvas-empty">No story generated yet.</p>
+        )}
+        <div className="board-story-actions">
+          <button className="btn btn-primary" type="button">
+            Generate Story
+          </button>
+          <button
+            className="btn-sm btn-green-sm"
+            onClick={handleDeleteBoard}
+            type="button"
+          >
+            Delete Board
+          </button>
+        </div>
+      </div>
 
-      </section>
-    </main>
+    </div>
   );
 };
 
