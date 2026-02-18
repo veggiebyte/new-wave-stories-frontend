@@ -6,11 +6,6 @@
 .landing-bg {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--color-bg);
-  background-image: url('/images/green_laser_bgd.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
