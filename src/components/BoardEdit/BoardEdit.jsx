@@ -259,7 +259,7 @@ const BoardEdit = () => {
         <div className="board-divider" />
 
         <div className="board-show-layout">
-          <div className="board-catalog-section">
+          <div>
             <h2 className="board-section-title">Catalog</h2>
             <p className="board-instructions">
               Click items to add them to your board (each item can only be added once).
@@ -297,7 +297,7 @@ const BoardEdit = () => {
             </div>
           </div>
 
-          <div className="board-canvas-section">
+          <div>
             <h2 className="board-section-title">Your Fashion Board</h2>
             <div className="board-canvas board-canvas-fixed">
               {selectedItems.length === 0 && (
@@ -357,7 +357,7 @@ const BoardEdit = () => {
 
         <div className="auth-form-actions">
           <button type="submit" className="btn btn-primary">
-            Save Changes
+            Update and Save Changes
           </button>
           <button
             type="button"
