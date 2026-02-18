@@ -8,11 +8,11 @@
 
 ## 📝 Description
 
-**New Wave Stories** is a full-stack web application inspired by Polyvore and early-1980s new wave club culture. Users assemble visual fashion collages using curated clothing and accessory cutouts, drawing from nightlife scenes in cities like New York, London, and Los Angeles. Each board functions as a creative composition emphasizing mood, aesthetics, and nostalgia. Users can also generate short AI-powered scene narratives that reflect their chosen city, vibe, and song inspiration.
+**New Wave Stories** is a full-stack web application inspired by Polyvore and early-1980s new wave club culture. Users assemble visual fashion collages using curated clothing and accessory cutouts, drawing from nightlife scenes in cities like New York, London, Manchester, England and Los Angeles. Each board functions as a creative composition emphasizing mood, aesthetics, and nostalgia. Users can also generate short AI-powered scene narratives that reflect their chosen city, vibe, and song inspiration.
 
 ## 💡 Why I Built It
 
-I have never been able to let go of the 1980s — the music, the fashion, the energy of that era has always stayed with me. I wanted to build something that combined that passion with the kind of creative, playful experience. New Wave Stories is my love letter to that decade, reimagined as a full-stack application where fashion and atmosphere come together.
+I have never been able to let go of the 1980s. I discovered a lot of British new wave music growing up and it never really left me. I wanted to build something that captured that aesthetic and paired it with the kind of creative outfit-building experience I used to love on Polyvore, a now defunct fashion collage site.
 
 </div>
 
@@ -92,3 +92,6 @@ I have never been able to let go of the 1980s — the music, the fashion, the en
 - Allow users to mark boards as public to share with other users
 - Enable visitors to browse public boards without logging in
 - Add commenting on public boards for community interaction
+- Include more realistic clothing pieces in the catalog and have more outfits that match the bands
+- Putting a "clear" button on the board so you can clear the entire board at once
+
