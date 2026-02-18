@@ -1,5 +1,5 @@
 <div id="header" align="center" style="background-color:#0a0a0a; padding: 2rem;">
-  <img src="public/images/logo_color.png" width="500" alt="New Wave Stories Logo" />
+  <img src="public/images/logo_color2.png" width="500" alt="New Wave Stories Logo" />
 </div>
 
 <div id="description" align="center">
