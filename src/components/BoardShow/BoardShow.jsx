@@ -123,7 +123,7 @@ const BoardShow = () => {
           Delete Board
         </button>
       </div>
-      
+
       <p className="board-back-link">
         <Link to="/boards">← Back to My Boards</Link>
       </p>

@@ -7,18 +7,14 @@
   width: 100%;
   min-height: 100vh;
   background-color: var(--color-bg);
+  background-image: url('/images/green_laser_bgd.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6rem 1.5rem 4rem;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      transparent,
-      transparent 3px,
-      rgba(255, 255, 255, 0.012) 3px,
-      rgba(255, 255, 255, 0.012) 4px
-    );
 }
 
 .landing-hero {
@@ -29,6 +25,11 @@
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
+  background-color: #0a0a0a;
+  border: 3px solid var(--color-green);
+  box-shadow: var(--glow-green);
+  border-radius: var(--radius-md);
+  padding: 3rem 2rem;
 }
 
 .landing-logo-wrap {
@@ -36,10 +37,10 @@
 }
 
 .landing-logo {
-  width: clamp(180px, 40vw, 300px);
+  width: clamp(280px, 70%, 500px);
   height: auto;
   margin: 0 auto;
-  filter: drop-shadow(0 0 18px rgba(238, 71, 153, 0.35));
+  filter: drop-shadow(0 0 16px rgba(238, 71, 153, 0.4));
 }
 
 .landing-tagline {
@@ -74,10 +75,10 @@
   font-size: 1.3rem;
   font-weight: 300;
   letter-spacing: 0.08em;
-  color: var(--color-white);
+  color: var(--color-pink);
   margin-top: 1.5rem;
   padding-bottom: 0.25rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-pink);
   font-style: italic;
 }
 
