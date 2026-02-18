@@ -1089,4 +1089,9 @@ ul {
     text-align: center;
   }
 
+  .board-show-layout {
+  grid-template-columns: 1fr;
+}
+
+
 }

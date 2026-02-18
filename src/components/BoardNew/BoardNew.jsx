@@ -159,10 +159,10 @@ const BoardNew = () => {
                   required
                 >
                   <option value="">Select a city</option>
-                  <option value="New York">New York</option>
-                  <option value="London">London</option>
-                  <option value="Los Angeles">Los Angeles</option>
-                  <option value="Manchester">Manchester</option>
+                  <option value="New York">New York City, New York</option>
+                  <option value="Los Angeles">Los Angeles, California</option>
+                  <option value="London">London, England</option>
+                  <option value="Manchester">Manchester, England</option>
                 </select>
               </div>
 
@@ -179,7 +179,6 @@ const BoardNew = () => {
                   <option value="Dark / Gothic">Dark / Gothic</option>
                   <option value="Colorful / Neon">Colorful / Neon</option>
                   <option value="Minimal / Stark">Minimal / Stark</option>
-                  <option value="Gender Fluid">Gender Fluid</option>
                   <option value="Punk / DIY">Punk / DIY</option>
                   <option value="Futuristic">Futuristic</option>
                 </select>

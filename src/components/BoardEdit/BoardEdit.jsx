@@ -25,7 +25,7 @@ const SONG_INSPO_IMAGES = {
   'Lies - The Thompson Twins': '/images/bands/thompson_twins.jpg',
   'Rise - Public Image Ltd': '/images/bands/pil.jpg',
   "Rock Lobster - The B-52's": '/images/bands/B52s.jpg',
-  'This Charming Man - The Smiths': '/images/bands/smiths.jpg',
+  'This Charming Man - The Smiths': '/images/bands/the_smiths.jpg',
   'Blue Monday - New Order': '/images/bands/new_order.jpg',
 };
 
@@ -161,7 +161,7 @@ const BoardEdit = () => {
       {error && <p className="auth-error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
-        
+
         <div className="board-form-layout">
           <div className="board-form-fields">
             <div className="form-group">
@@ -185,10 +185,10 @@ const BoardEdit = () => {
                 required
               >
                 <option value="">Select a city</option>
-                <option value="New York">New York</option>
-                <option value="London">London</option>
-                <option value="Los Angeles">Los Angeles</option>
-                <option value="Manchester">Manchester</option>
+                <option value="New York">New York City, New York</option>
+                <option value="Los Angeles">Los Angeles, California</option>
+                <option value="London">London, England</option>
+                <option value="Manchester">Manchester, England</option>
               </select>
             </div>
 
@@ -205,7 +205,6 @@ const BoardEdit = () => {
                 <option value="Dark / Gothic">Dark / Gothic</option>
                 <option value="Colorful / Neon">Colorful / Neon</option>
                 <option value="Minimal / Stark">Minimal / Stark</option>
-                <option value="Gender Fluid">Gender Fluid</option>
                 <option value="Punk / DIY">Punk / DIY</option>
                 <option value="Futuristic">Futuristic</option>
               </select>
