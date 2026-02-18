@@ -12,7 +12,7 @@
 
 ## 💡 Why I Built It
 
-I have never been able to let go of the 1980s — the music, the fashion, the energy of that era has always stayed with me. I wanted to build something that combined that passion with the kind of creative, playful experience I used to love on Polyvore. New Wave Stories is my love letter to that decade, reimagined as a full-stack application where fashion and atmosphere come together.
+I have never been able to let go of the 1980s — the music, the fashion, the energy of that era has always stayed with me. I wanted to build something that combined that passion with the kind of creative, playful experience. New Wave Stories is my love letter to that decade, reimagined as a full-stack application where fashion and atmosphere come together.
 
 </div>
 
